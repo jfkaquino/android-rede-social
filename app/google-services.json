@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "272113262911",
+    "project_id": "android-rede-social",
+    "storage_bucket": "android-rede-social.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272113262911:android:729ac5db1d485f4801338a",
+        "android_client_info": {
+          "package_name": "com.android.redesocial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOZKgr2M_YRYYHl9jBeu_qaRwIbTrLZwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

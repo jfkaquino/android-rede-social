@@ -30,11 +30,10 @@ import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 
 @Composable
-fun SignupScreen(
+fun LoginScreen(
     authViewModel: AuthViewModel,
-    onNavigateToLogin: () -> Unit
+    onNavigateToSignUp: () -> Unit
 ){
-    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -48,15 +47,8 @@ fun SignupScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Criar conta", style = MaterialTheme.typography.headlineMedium)
+            Text("Fazer login", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Nome") }
-            )
-            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = email,
@@ -76,14 +68,16 @@ fun SignupScreen(
             Button(
                 modifier = Modifier.width(110.dp),
                 onClick = {
-                    authViewModel.signUp(email, password, name)
+                    authViewModel.signIn(email, password)
                 }
             ) {
-                Text("Criar")
+                Text("Entrar")
             }
             Spacer(modifier = Modifier.height(4.dp))
-            TextButton(onClick = onNavigateToLogin) {
-                Text("Fazer login")
+            TextButton(
+                onClick = onNavigateToSignUp
+            ) {
+                Text("Criar conta")
             }
 
             if (isLoading) {
