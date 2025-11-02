@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.redesocial.ui.account.LoginScreen
 import com.android.redesocial.ui.account.SignupScreen
+import com.android.redesocial.ui.home.Feed
 import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 
@@ -34,7 +35,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RedeSocialTheme {
-                AppNavigation(authViewModel)
+                //AppNavigation(authViewModel)
+                Feed()
             }
         }
     }

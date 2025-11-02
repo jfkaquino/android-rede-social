@@ -79,18 +79,17 @@ fun BarraInferior() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            BarraInferiorBotao("", Icons.Default.Home)
-            BarraInferiorBotao("", Icons.Default.Search, { })
-            BarraInferiorBotao("", Icons.Default.AddCircle)
-            BarraInferiorBotao("", Icons.Default.Star)
-            BarraInferiorBotao("", Icons.Default.AccountCircle)
+            BarraInferiorBotao(Icons.Default.Home)
+            BarraInferiorBotao(Icons.Default.Search, { })
+            BarraInferiorBotao(Icons.Default.AddCircle)
+            BarraInferiorBotao(Icons.Default.Star)
+            BarraInferiorBotao(Icons.Default.AccountCircle)
         }
     }
 }
 
 @Composable
 private fun BarraInferiorBotao(
-    Texto: String,
     Icone: ImageVector,
     onClick: () -> Unit = {}
 ) {
@@ -112,11 +111,5 @@ private fun BarraInferiorBotao(
             )
         }
         Spacer(Modifier.height(10.dp))
-        Text(
-            text = Texto,
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.labelSmall,
-            fontWeight = FontWeight.Bold
-        )
     }
 }
