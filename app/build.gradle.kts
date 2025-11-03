@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -58,22 +59,22 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    implementation(platform(libs.firebase.bom))
 
     // Dependências do Firebase Authentication
-    implementation("com.google.firebase:firebase-auth")
+    implementation(libs.firebase.auth)
 
     // Dependências para a integração do ViewModel com Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.1")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Dependência para Navegação com Compose
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation(libs.androidx.navigation.compose)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("androidx.compose.material:material:1.6.0")
-    implementation("io.coil-kt:coil-compose:2.4.0")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.androidx.material)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v261)
+    implementation(libs.androidx.lifecycle.viewmodel.compose.v261)
 }
