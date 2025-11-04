@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Comment
 import androidx.compose.material.icons.automirrored.outlined.Send
@@ -39,6 +40,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -125,12 +127,15 @@ fun Post() {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(250.dp),
+            shape = RoundedCornerShape(5.dp)
         ) {
             AsyncImage(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop,
                 model = imagemUrl ?: "https://source.unsplash.com/random/800x800",
-                contentDescription = "Imagem do post",
-                modifier = Modifier.fillMaxSize()
+                contentDescription = "Imagem do post"
             )
         }
 

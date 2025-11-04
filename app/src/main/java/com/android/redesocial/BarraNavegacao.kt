@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
@@ -95,7 +96,7 @@ fun BarraSuperior() {
                     Icon(
                         modifier = Modifier
                             .fillMaxSize(),
-                        imageVector = Icons.AutoMirrored.Outlined.Message,
+                        imageVector = Icons.AutoMirrored.Outlined.Chat,
                         contentDescription = "Chat"
                     )
                 }
@@ -118,18 +119,19 @@ fun BarraInferior() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            BarraInferiorBotao(Icons.Outlined.Home)
-            BarraInferiorBotao(Icons.Outlined.Search)
-            BarraInferiorBotao(Icons.Outlined.AddCircleOutline)
-            BarraInferiorBotao(Icons.Outlined.SportsEsports)
-            BarraInferiorBotao(Icons.Outlined.AccountCircle)
+            BarraInferiorBotao(Icons.Outlined.Home, "Feed")
+            BarraInferiorBotao(Icons.Outlined.Search, "Pesquisa")
+            BarraInferiorBotao(Icons.Outlined.AddCircleOutline, "Criar")
+            BarraInferiorBotao(Icons.Outlined.SportsEsports, "Jogos")
+            BarraInferiorBotao(Icons.Outlined.AccountCircle, "Perfil")
         }
     }
 }
 
 @Composable
 private fun BarraInferiorBotao(
-    Icone: ImageVector,
+    icon: ImageVector,
+    text: String,
     onClick: () -> Unit = {}
 ) {
     Column(
@@ -145,18 +147,24 @@ private fun BarraInferiorBotao(
             Icon(
                 modifier = Modifier
                     .fillMaxSize(),
-                imageVector = Icone,
+                imageVector = icon,
                 contentDescription = "",
             )
         }
         Spacer(Modifier.height(10.dp))
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
 @Preview
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun BarraSuperiorMenu(
+fun BarraSuperiorMenu(
     title: String = "Título"
 ) {
     CenterAlignedTopAppBar(
