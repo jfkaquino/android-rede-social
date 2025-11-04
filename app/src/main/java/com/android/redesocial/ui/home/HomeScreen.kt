@@ -1,5 +1,6 @@
 package com.android.redesocial.ui.home
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,13 +13,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Comment
+import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Comment
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,13 +46,16 @@ import coil.compose.AsyncImage
 import com.android.redesocial.BarraInferior
 import com.android.redesocial.BarraSuperior
 import com.android.redesocial.RetrofitInstance
+import com.android.redesocial.viewmodel.AuthViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
 @Composable
-@Preview
-fun Feed(){
+fun Feed(
+    authViewModel: AuthViewModel,
+    user: com.google.firebase.auth.FirebaseUser
+){
 
     Scaffold(
         topBar = { BarraSuperior() },
@@ -63,10 +75,10 @@ fun Feed(){
     }
 }
 
+@Preview
 @Composable
 fun Post() {
     val clientId = "WoI_pqstOEXe6jOI1iN5HDyWEbjxqoP2MYwxa1MFl5A"
-
     var imagemUrl by rememberSaveable { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
@@ -88,17 +100,27 @@ fun Post() {
             .padding(8.dp)
     ) {
         Row(
+            modifier = Modifier
+                .padding(5.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            IconButton(onClick = { }) {
+            IconButton(
+                modifier = Modifier
+                    .size(35.dp),
+                onClick = { }
+            ) {
                 Icon(
-                    imageVector = Icons.Default.AccountCircle,
+                    imageVector = Icons.Outlined.AccountCircle,
                     contentDescription = "Perfil",
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
-            Text("Usuário", fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.width(5.dp))
+            Text(
+                "Usuário",
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         Card(
             modifier = Modifier
@@ -113,28 +135,41 @@ fun Post() {
         }
 
         Row(
+            modifier = Modifier
+                .padding(5.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            IconButton(onClick = { }) {
+            IconButton(
+                modifier = Modifier.size(30.dp),
+                onClick = { }
+            ) {
                 Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
+                    imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "Perfil",
-                    modifier = Modifier.size(27.dp)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
-            IconButton(onClick = { }) {
+            Spacer(modifier = Modifier.width(10.dp))
+            IconButton(
+                modifier = Modifier.size(30.dp),
+                onClick = { }
+            ) {
                 Icon(
-                    imageVector = Icons.Default.List,
+                    imageVector = Icons.AutoMirrored.Outlined.Comment,
                     contentDescription = "Comentários",
-                    modifier = Modifier.size(27.dp)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
-            IconButton(onClick = { }) {
+            Spacer(modifier = Modifier.width(10.dp))
+            IconButton(
+                modifier = Modifier.size(30.dp),
+                onClick = { }
+            ) {
                 Icon(
-                    imageVector = Icons.Default.Send,
+                    imageVector = Icons.AutoMirrored.Outlined.Send,
                     contentDescription = "Compartilhar",
-                    modifier = Modifier.size(27.dp)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }

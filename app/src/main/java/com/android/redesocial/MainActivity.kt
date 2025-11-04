@@ -35,8 +35,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RedeSocialTheme {
-                //AppNavigation(authViewModel)
-                Feed()
+                AppNavigation(authViewModel)
             }
         }
     }
@@ -75,10 +74,8 @@ class MainActivity : ComponentActivity() {
             }
 
             composable("home") {
-                /*
-
                 if(user != null) {
-                    ProfileScreen(
+                    Feed(
                         authViewModel = authViewModel,
                         user = user!!
                     )
@@ -91,7 +88,6 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-                */
             }
 
         }
