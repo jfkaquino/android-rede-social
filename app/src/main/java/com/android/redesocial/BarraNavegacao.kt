@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.AddCircleOutline
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Games
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Message
@@ -31,8 +33,10 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Sports
 import androidx.compose.material.icons.outlined.SportsEsports
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -51,6 +55,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,7 +109,7 @@ fun BarraSuperior() {
 @Composable
 fun BarraInferior() {
     BottomAppBar(
-        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
+        containerColor = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Row(
             Modifier
@@ -146,4 +151,35 @@ private fun BarraInferiorBotao(
         }
         Spacer(Modifier.height(10.dp))
     }
+}
+
+@Preview
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun BarraSuperiorMenu(
+    title: String = "Título"
+) {
+    CenterAlignedTopAppBar(
+        navigationIcon = {
+            IconButton(
+                onClick = { },
+                modifier = Modifier
+                    .size(30.dp)
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = "Voltar",
+                )
+            }
+        },
+        title = {
+            Text(
+                title,
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center
+            )
+        },
+    )
 }
