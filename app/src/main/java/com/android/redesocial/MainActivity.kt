@@ -74,6 +74,8 @@ class MainActivity : ComponentActivity() {
             }
 
             composable("home") {
+
+
                 if(user != null) {
                     Feed(
                         authViewModel = authViewModel,
@@ -88,6 +90,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+
             }
 
         }

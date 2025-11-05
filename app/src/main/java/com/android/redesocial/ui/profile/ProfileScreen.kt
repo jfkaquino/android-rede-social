@@ -1,7 +1,9 @@
 package com.android.redesocial.ui.profile
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,10 +15,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.AddCircleOutline
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Message
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.HorizontalDivider
@@ -30,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -52,24 +58,66 @@ fun Profile(
 ){
 
     Scaffold(
-        topBar = { BarraSuperiorMenu("") },
+        //topBar = { BarraSuperiorMenu("") },
         bottomBar = { BarraInferior() }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(160.dp)
+            ) {
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(105.dp)
+                ) {
+                    drawRect(Color(0xFF2CC4B0))
+                }
+
+                IconButton(
+                    onClick = { },
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 8.dp, top = 8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                        contentDescription = "Voltar",
+                        tint = Color.White
+                    )
+                }
+
+                IconButton(
+                    onClick = {  },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(end = 8.dp, top = 8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Edit,
+                        contentDescription = "Configurações",
+                        tint = Color.White
+                    )
+                }
+
+                Icon(
+                    imageVector = Icons.Outlined.AccountCircle,
+                    contentDescription = "Perfil",
+                    modifier = Modifier
+                        .size(120.dp)
+                        .align(Alignment.BottomCenter)
+                )
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    modifier = Modifier
-                        .size(120.dp),
-                    imageVector = Icons.Outlined.AccountCircle,
-                    contentDescription = "Perfil"
-                )
                 Text(
                     "@usuario",
                     style = MaterialTheme.typography.displaySmall
@@ -141,7 +189,7 @@ fun Profile(
                         onClick = { },
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Edit,
+                            imageVector = Icons.Outlined.Person,
                             contentDescription = "Editar perfil",
                         )
                     }
@@ -150,9 +198,18 @@ fun Profile(
                         onClick = { },
                     ) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.Message,
+                            imageVector = Icons.Outlined.AddCircleOutline,
                             tint = Color.White,
                             contentDescription = "Abrir bate-papo",
+                        )
+                    }
+                    Spacer(Modifier.width(20.dp))
+                    Button(
+                        onClick = { },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Edit,
+                            contentDescription = "Editar perfil",
                         )
                     }
                 }

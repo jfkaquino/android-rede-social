@@ -1,10 +1,13 @@
 package com.android.redesocial.ui.games
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,9 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android.redesocial.BarraSuperiorMenu
+import com.android.redesocial.R
 
 @Composable
 @Preview
@@ -36,29 +42,48 @@ fun Settings(){
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
-            Opcao()
+            Opcao("Sudoku", R.drawable.sudoku)
+            Opcao("Paciência", R.drawable.paciencia3)
+            Opcao("Jogo da Velha", R.drawable.velha)
+            Opcao("Xadrez", R.drawable.xadrez)
 
-            Opcao()
-            Opcao()
-            Opcao()
-            Opcao()
+            HorizontalDivider(
+                thickness = 1.dp,
+                modifier = Modifier.width(300.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
         }
     }
 }
 
 @Composable
-fun Opcao(){
+fun Opcao(nome: String, @DrawableRes imageResId: Int){
 
     Column(
-
+        modifier = Modifier
+            .fillMaxWidth()
     ) {
-        Row {
-            HorizontalDivider(modifier = Modifier.width(300.dp))
+        HorizontalDivider(thickness = 1.dp,
+            modifier = Modifier.width(300.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Image(
+                painter = painterResource(id = imageResId),
+                contentDescription = "Nome",
+                modifier = Modifier
+                    .height(65.dp)
+                    .padding(start = 47.dp),
+                contentScale = ContentScale.Fit
+            )
+            Text(nome)
         }
-        Text("Jogo")
+
     }
-
-
-
-    Spacer(modifier = Modifier.height(67.dp))
 }
