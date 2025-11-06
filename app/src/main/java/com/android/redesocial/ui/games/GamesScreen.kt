@@ -42,10 +42,10 @@ fun Settings(){
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
-            Opcao("Sudoku", R.drawable.sudoku)
-            Opcao("Paciência", R.drawable.paciencia3)
-            Opcao("Jogo da Velha", R.drawable.velha)
-            Opcao("Xadrez", R.drawable.xadrez)
+            //Opcao("Sudoku", R.drawable.sudoku)
+            //Opcao("Paciência", R.drawable.paciencia3)
+            //Opcao("Jogo da Velha", R.drawable.velha)
+            //Opcao("Xadrez", R.drawable.xadrez)
 
             HorizontalDivider(
                 thickness = 1.dp,
