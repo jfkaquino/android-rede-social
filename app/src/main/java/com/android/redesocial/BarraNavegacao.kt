@@ -185,8 +185,7 @@ fun BarraSuperiorMenu(
         title = {
             Text(
                 title,
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center
+                style = MaterialTheme.typography.titleLarge
             )
         },
     )

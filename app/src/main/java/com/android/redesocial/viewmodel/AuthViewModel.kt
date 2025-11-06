@@ -69,8 +69,8 @@ class AuthViewModel : ViewModel() {
 
     }
 
-    fun updateUser(){
-
+    fun getUidDoUsuario(): String? {
+        return auth.currentUser?.uid
     }
 
     fun signOut(){
