@@ -1,9 +1,10 @@
+/*
 package com.android.redesocial.data.cloud
 
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.Firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.tasks.await
@@ -109,3 +110,4 @@ class FirestoreRepository {
             }
     }
 }
+*/

@@ -59,15 +59,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 
-    // Firebase Auth, Firestore e Storage
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-storage")
+    // Dependência do Firebase Authentication (com suporte a Kotlin)
+    implementation("com.google.firebase:firebase-auth-ktx")
 
-    // KTX para Firestore e Storage
-    implementation("com.google.firebase:firebase-firestore-ktx")
+    // Dependência do Firebase Storage (com suporte a Kotlin)
     implementation("com.google.firebase:firebase-storage-ktx")
 
     // Dependências para a integração do ViewModel com Compose

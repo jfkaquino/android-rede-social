@@ -6,23 +6,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.redesocial.ui.account.LoginScreen
 import com.android.redesocial.ui.account.SignupScreen
-import com.android.redesocial.ui.home.Feed
+import com.android.redesocial.ui.home.FeedScreen
 import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 
@@ -77,7 +70,7 @@ class MainActivity : ComponentActivity() {
 
 
                 if(user != null) {
-                    Feed(
+                    FeedScreen(
                         authViewModel = authViewModel,
                         user = user!!
                     )
