@@ -67,6 +67,8 @@ dependencies {
     // Dependência do Firebase Storage (com suporte a Kotlin)
     implementation("com.google.firebase:firebase-storage-ktx")
 
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
     // Dependências para a integração do ViewModel com Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 

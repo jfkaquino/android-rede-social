@@ -1,4 +1,3 @@
-/*
 package com.android.redesocial.viewmodel
 
 import android.net.Uri
@@ -96,4 +95,3 @@ class PostViewModel(
     }
 
 }
-*/
