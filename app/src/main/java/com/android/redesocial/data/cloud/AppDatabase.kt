@@ -8,6 +8,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
+import kotlin.coroutines.cancellation.CancellationException
 
 // --- Estrutura de Dados ---
 
@@ -32,10 +33,11 @@ class FirestoreRepository {
      * Salva um novo Post na coleção principal de posts e na coleção do usuário.
      * @param uid O ID do usuário logado (obtido do AuthViewModel).
      */
-    fun savePost(uid: String, label: String, imageUrl: String) {
+
+    suspend fun savePost(uid: String, label: String, imageUrl: String): Boolean {
         if (uid.isEmpty()) {
             Log.e(TAG, "UID é vazio. Falha ao salvar Post.")
-            return
+            return false
         }
 
         val newPost = Post(
@@ -44,21 +46,30 @@ class FirestoreRepository {
             ownerId = uid
         )
 
-        // 1. Salvar o Post na coleção de posts do usuário (para listagem particular)
-        db.collection("usuarios")
-            .document(uid)
-            .collection("meus-posts")
-            .add(newPost)
-            .addOnSuccessListener { Log.d(TAG, "Post salvo na coleção do usuário com ID: ${it.id}") }
-            .addOnFailureListener { e -> Log.e(TAG, "Erro ao salvar Post na coleção do usuário", e) }
+        return try {
+            // 1. Salvar o Post na coleção de posts do usuário
+            db.collection("usuarios")
+                .document(uid)
+                .collection("meus-posts")
+                .add(newPost)
+                .await() // Aguarda a conclusão
 
-        // 2. Salvar o Post em uma coleção global de 'posts' (para Feed de Notícias)
-        db.collection("posts")
-            .add(newPost)
-            .addOnSuccessListener { Log.d(TAG, "Post salvo no feed global com ID: ${it.id}") }
-            .addOnFailureListener { e -> Log.e(TAG, "Erro ao salvar Post no feed global", e) }
+            Log.d(TAG, "Post salvo na coleção do usuário.")
+
+            // 2. Salvar o Post em uma coleção global de 'posts'
+            db.collection("posts")
+                .add(newPost)
+                .await() // Aguarda a conclusão
+
+            Log.d(TAG, "Post salvo no feed global.")
+            true // Sucesso
+
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e // Propaga cancelamentos
+            Log.e(TAG, "Erro ao salvar Post no Firestore", e)
+            false // Falha
+        }
     }
-
 
     /**
      * Função de exemplo para Upload de Imagem.
