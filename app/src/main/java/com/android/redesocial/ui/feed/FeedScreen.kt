@@ -98,9 +98,7 @@ fun FeedScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f), // Ocupa o espaço restante
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .weight(1f)
             ) {
                 items(posts) { post ->
                     PostItem(post = post)

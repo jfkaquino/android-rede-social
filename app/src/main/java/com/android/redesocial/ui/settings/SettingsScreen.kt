@@ -34,15 +34,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.android.redesocial.BarraSuperiorMenu
 import com.android.redesocial.R
 
 @Composable
-@Preview
-fun Settings(){
+fun Settings(
+    navController: NavController
+){
 
     Scaffold(
-        topBar = { BarraSuperiorMenu("Configurações") }
+        topBar = {
+            BarraSuperiorMenu(
+                title = "Configurações",
+                navController = navController
+            ) },
     ) { innerPadding ->
         Column(
             modifier = Modifier

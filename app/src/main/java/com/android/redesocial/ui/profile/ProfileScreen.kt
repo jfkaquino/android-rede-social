@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -22,31 +25,50 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.android.redesocial.BarraInferior
 import com.android.redesocial.BarraSuperiorMenu
-import com.android.redesocial.data.cloud.Post
+import com.android.redesocial.ui.post.PostItem
+import com.android.redesocial.ui.post.toFriendlyDate
 import com.android.redesocial.viewmodel.AuthViewModel
-import java.util.Date
+import com.android.redesocial.viewmodel.PostViewModel
+import com.android.redesocial.viewmodel.PostViewModelFactory
 
 @Composable
 fun ProfileScreen(
     authViewModel: AuthViewModel,
-    navController: NavController
+    navController: NavController,
+    userId: String = authViewModel.getUidDoUsuario()!!
 ){
+    val viewModel: PostViewModel = viewModel(
+        factory = PostViewModelFactory(authViewModel)
+    )
+
     val name: String? = authViewModel.getProfileName()
     val email: String? = authViewModel.getAccountEmail()
 
-    val nPosts: Int = 0
-    val lastSeen: Date = Date()
+    val posts by viewModel.userProfilePosts.collectAsState()
+    val postCount by viewModel.userPostCount.collectAsState()
+    val lastPostDate by viewModel.userLastPostDate.collectAsState()
+
+    LaunchedEffect(userId) {
+        viewModel.loadProfileForUser(userId)
+    }
 
     Scaffold(
-        topBar = { BarraSuperiorMenu("") },
+        topBar = {
+            BarraSuperiorMenu(
+                title = "",
+                navController = navController
+            ) },
         bottomBar = { BarraInferior(
             navController
         ) }
@@ -90,7 +112,7 @@ fun ProfileScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = nPosts.toString(),
+                            text = postCount.toString(),
                             style = MaterialTheme.typography.headlineLarge
                         )
                         Text(
@@ -107,7 +129,7 @@ fun ProfileScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = lastSeen.toString(),
+                            text = lastPostDate?.toFriendlyDate("dd/MM/yy") ?: "Nenhum post",
                             style = MaterialTheme.typography.headlineLarge
                         )
                         Text(
@@ -125,6 +147,7 @@ fun ProfileScreen(
                 )
                 Spacer(Modifier.height(10.dp))
             }
+            if (authViewModel.getUidDoUsuario() == userId)
             item {
                 Row(
                     modifier = Modifier
@@ -144,12 +167,14 @@ fun ProfileScreen(
                     }
                     Spacer(Modifier.width(20.dp))
                     Button(
-                        onClick = { },
+                        onClick = {
+                            authViewModel.signOut()
+                            navController.navigate("login")
+                        },
                     ) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.Message,
-                            tint = Color.White,
-                            contentDescription = "Abrir bate-papo",
+                            imageVector = Icons.AutoMirrored.Outlined.Logout,
+                            contentDescription = "Sair",
                         )
                     }
                 }
@@ -163,8 +188,8 @@ fun ProfileScreen(
                 Spacer(Modifier.height(15.dp))
             }
 
-            item{
-                Post()
+            items(posts) { post ->
+                PostItem(post = post)
             }
         }
     }

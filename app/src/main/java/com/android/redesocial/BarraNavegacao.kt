@@ -176,16 +176,18 @@ private fun BarraInferiorBotao(
     }
 }
 
-@Preview
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun BarraSuperiorMenu(
-    title: String = "Título"
+    title: String = "Título",
+    navController: NavController
 ) {
     CenterAlignedTopAppBar(
         navigationIcon = {
             IconButton(
-                onClick = { },
+                onClick = {
+                    navController.popBackStack()
+                },
                 modifier = Modifier
                     .size(30.dp)
             ) {

@@ -69,7 +69,11 @@ fun PostScreen(
     }
 
     Scaffold(
-        topBar = { BarraSuperiorMenu("Criar post") }, // Nome atualizado
+        topBar = {
+            BarraSuperiorMenu(
+                title = "Criar post",
+                navController = navController
+            ) },
         bottomBar = { BarraInferior(navController) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
@@ -121,7 +125,9 @@ fun PostScreen(
 @Composable
 fun PostItem(post: Post) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp),
         shape = MaterialTheme.shapes.medium
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
@@ -134,11 +140,11 @@ fun PostItem(post: Post) {
                 Spacer(modifier = Modifier.padding(start = 8.dp))
                 Column {
                     Text(
-                        text = post.ownerId ?: "Usuário anônimo", // Mostra o ID (ou idealmente, o nome)
+                        text = post.ownerName ?: "",
                         style = MaterialTheme.typography.titleSmall
                     )
                     Text(
-                        text = post.timestamp.toFriendlyDate(), // Formata a data
+                        text = post.timestamp.toFriendlyDate("dd/MM/yy HH:mm"), // Formata a data
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -154,8 +160,8 @@ fun PostItem(post: Post) {
 }
 
 // Função utilitária simples para formatar o timestamp
-fun Long.toFriendlyDate(): String {
+fun Long.toFriendlyDate(s: String): String {
     val date = Date(this)
-    val format = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+    val format = SimpleDateFormat(s, Locale.getDefault())
     return format.format(date)
 }

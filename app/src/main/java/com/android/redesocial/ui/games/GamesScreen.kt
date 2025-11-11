@@ -31,7 +31,13 @@ import com.android.redesocial.R
 fun Settings(){
 
     Scaffold(
-        topBar = { BarraSuperiorMenu("Jogos") }
+        /*
+        topBar = {
+            BarraSuperiorMenu(
+            title = "Jogos",
+            navController = navController
+        ) }
+         */
     ) { innerPadding ->
         Column(
             modifier = Modifier

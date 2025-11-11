@@ -16,6 +16,7 @@ import kotlin.coroutines.cancellation.CancellationException
 data class Post(
     // Renomeado 'label' para 'text' para maior clareza
     val text: String? = null,
+    val ownerName: String? = null, // Este campo será preenchido
     val ownerId: String? = null,
     val timestamp: Long = System.currentTimeMillis()
 )
@@ -33,16 +34,18 @@ class FirestoreRepository {
      * Salva um novo Post (apenas texto) no Firestore.
      * @param uid O ID do usuário logado.
      * @param text O conteúdo do post.
+     * @param ownerName O NOME de exibição do usuário logado. (<<< NOVO PARÂMETRO)
      */
-    suspend fun savePost(uid: String, text: String): Boolean {
+    suspend fun savePost(uid: String, text: String, ownerName: String): Boolean { // <<< ASSINATURA MODIFICADA
         if (uid.isEmpty()) {
             Log.e(TAG, "UID é vazio. Falha ao salvar Post.")
             return false
         }
 
-        // Criamos o post apenas com texto
+        // Criamos o post com texto e nome
         val newPost = Post(
             text = text,
+            ownerName = ownerName, // <<< CAMPO ADICIONADO
             ownerId = uid
             // timestamp é definido por padrão
         )
