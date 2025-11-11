@@ -30,8 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.android.redesocial.BarraInferior
 import com.android.redesocial.BarraSuperiorMenu
-import com.android.redesocial.ui.post.Post
+import com.android.redesocial.data.cloud.Post
 import com.android.redesocial.viewmodel.AuthViewModel
+import java.util.Date
 
 @Composable
 fun ProfileScreen(
@@ -40,6 +41,9 @@ fun ProfileScreen(
 ){
     val name: String? = authViewModel.getProfileName()
     val email: String? = authViewModel.getAccountEmail()
+
+    val nPosts: Int = 0
+    val lastSeen: Date = Date()
 
     Scaffold(
         topBar = { BarraSuperiorMenu("") },
@@ -86,11 +90,11 @@ fun ProfileScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            "86",
+                            text = nPosts.toString(),
                             style = MaterialTheme.typography.headlineLarge
                         )
                         Text(
-                            "Seguidores",
+                            "Posts",
                             style = MaterialTheme.typography.labelLarge
                         )
                     }
@@ -103,11 +107,11 @@ fun ProfileScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            "95",
+                            text = lastSeen.toString(),
                             style = MaterialTheme.typography.headlineLarge
                         )
                         Text(
-                            "Seguindo",
+                            "Último post",
                             style = MaterialTheme.typography.labelLarge
                         )
                     }

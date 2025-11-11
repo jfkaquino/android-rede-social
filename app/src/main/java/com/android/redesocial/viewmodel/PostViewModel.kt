@@ -1,20 +1,19 @@
 package com.android.redesocial.viewmodel
 
-import android.net.Uri
+// Removida a importação de android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.android.redesocial.data.cloud.FirestoreRepository
+import com.android.redesocial.data.cloud.Post // Importe seu modelo de dados Post
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/**
- * Factory para criar o PostViewModel, injetando o AuthViewModel.
- */
+// ... (Factory permanece a mesma)
 class PostViewModelFactory(
     private val authViewModel: AuthViewModel
 ) : ViewModelProvider.Factory {
@@ -34,11 +33,18 @@ class PostViewModel(
 ) : ViewModel() {
 
     // --- Estados da UI ---
-    private val _label = MutableStateFlow("")
-    val label: StateFlow<String> = _label.asStateFlow()
 
-    private val _imageUri = MutableStateFlow<Uri?>(null)
-    val imageUri: StateFlow<Uri?> = _imageUri.asStateFlow()
+    // Renomeado de 'label' para 'text'
+    private val _text = MutableStateFlow("")
+    val text: StateFlow<String> = _text.asStateFlow()
+
+    // Estado de 'imageUri' REMOVIDO
+    // private val _imageUri = MutableStateFlow<Uri?>(null)
+    // val imageUri: StateFlow<Uri?> = _imageUri.asStateFlow()
+
+    // Estado para armazenar a lista de posts lidos
+    private val _postsList = MutableStateFlow<List<Post>>(emptyList())
+    val postsList: StateFlow<List<Post>> = _postsList.asStateFlow()
 
     private val _postFeedback = MutableStateFlow<String?>(null)
     val postFeedback: StateFlow<String?> = _postFeedback.asStateFlow()
@@ -49,16 +55,17 @@ class PostViewModel(
     private val TAG = "PostViewModel"
 
     // --- Eventos da UI ---
-    fun onLabelChanged(newLabel: String) {
-        _label.value = newLabel
+
+    // Renomeado de 'onLabelChanged' para 'onTextChanged'
+    fun onTextChanged(newText: String) {
+        _text.value = newText
     }
 
-    fun onImageSelected(newUri: Uri?) {
-        _imageUri.value = newUri
-    }
+    // Função 'onImageSelected' REMOVIDA
+    // fun onImageSelected(newUri: Uri?) { ... }
 
     /**
-     * Lógica principal para criar e publicar um novo post.
+     * Lógica principal para criar e publicar um novo post (apenas texto).
      */
     fun publishNewPost() {
         viewModelScope.launch {
@@ -72,33 +79,24 @@ class PostViewModel(
                 return@launch
             }
 
-            val currentImageUri = _imageUri.value
-            if (currentImageUri == null) {
-                _postFeedback.value = "Selecione uma imagem para postar."
+            // Validação: checa se o texto não está vazio
+            val currentText = _text.value
+            if (currentText.isBlank()) {
+                _postFeedback.value = "Escreva algo para postar."
                 _loading.value = false
                 return@launch
             }
 
-            // 1. Fazer o upload da imagem
-            Log.d(TAG, "Iniciando upload da imagem...")
-            val imageUrl = firestoreRepository.uploadPostImage(uid, currentImageUri)
+            // 1. Salvar o Post no Firestore (sem imagem)
+            Log.d(TAG, "Salvando post de texto...")
+            val success = firestoreRepository.savePost(uid, currentText)
 
-            if (imageUrl != null) {
-                // 2. Salvar o Post no Firestore
-                Log.d(TAG, "Upload concluído. Salvando post...")
-                val success = firestoreRepository.savePost(uid, _label.value, imageUrl)
-
-                if (success) {
-                    _postFeedback.value = "Post publicado com sucesso!"
-                    // Limpa os campos após o sucesso
-                    _label.value = ""
-                    _imageUri.value = null
-                } else {
-                    _postFeedback.value = "Erro ao salvar o post no banco de dados."
-                }
-
+            if (success) {
+                _postFeedback.value = "Post publicado com sucesso!"
+                _text.value = "" // Limpa o campo após o sucesso
+                loadGlobalFeed() // Atualiza o feed após postar
             } else {
-                _postFeedback.value = "Erro ao fazer upload da imagem."
+                _postFeedback.value = "Erro ao salvar o post no banco de dados."
             }
 
             _loading.value = false
@@ -106,10 +104,36 @@ class PostViewModel(
     }
 
     /**
-     * Função para carregar posts (sem mudanças).
+     * Função para carregar o feed global de posts.
+     */
+    fun loadGlobalFeed() {
+        viewModelScope.launch {
+            _loading.value = true // Usamos o loading principal por enquanto
+            try {
+                _postsList.value = firestoreRepository.readGlobalFeed()
+            } catch (e: Exception) {
+                _postFeedback.value = "Erro ao carregar o feed."
+            }
+            _loading.value = false
+        }
+    }
+
+    /**
+     * Função para carregar posts do usuário (exemplo).
      */
     fun loadUserPosts() {
-        // ... (código existente)
+        viewModelScope.launch {
+            val uid = authViewModel.getUidDoUsuario()
+            if (uid != null) {
+                _loading.value = true
+                try {
+                    _postsList.value = firestoreRepository.readUserPosts(uid)
+                } catch (e: Exception) {
+                    _postFeedback.value = "Erro ao carregar seus posts."
+                }
+                _loading.value = false
+            }
+        }
     }
 
     fun clearFeedback() {

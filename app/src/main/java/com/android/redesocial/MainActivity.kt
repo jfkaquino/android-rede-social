@@ -15,7 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.redesocial.ui.account.LoginScreen
 import com.android.redesocial.ui.account.SignupScreen
-import com.android.redesocial.ui.home.FeedScreen
+import com.android.redesocial.ui.post.FeedScreen
 import com.android.redesocial.ui.post.PostScreen
 import com.android.redesocial.ui.profile.ProfileScreen
 import com.android.redesocial.ui.theme.RedeSocialTheme
@@ -73,8 +73,7 @@ class MainActivity : ComponentActivity() {
                 if(user != null) {
                     FeedScreen(
                         authViewModel = authViewModel,
-                        navController = navController,
-                        user = user!!
+                        navController = navController
                     )
                 } else {
                     LaunchedEffect(Unit) {
