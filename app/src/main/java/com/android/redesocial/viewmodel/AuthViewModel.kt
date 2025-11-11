@@ -23,7 +23,7 @@ class AuthViewModel : ViewModel() {
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading
 
-    fun signUp(email: String, senha: String, nome: String){
+    fun signUp(email: String, password: String, name: String){
 
         viewModelScope.launch {
 
@@ -31,10 +31,10 @@ class AuthViewModel : ViewModel() {
             _authFeedback.value = null
 
             try {
-                auth.createUserWithEmailAndPassword(email, senha).await()
+                auth.createUserWithEmailAndPassword(email, password).await()
 
                 val profileUpdate = UserProfileChangeRequest.Builder()
-                    .setDisplayName(nome)
+                    .setDisplayName(name)
                     .build()
 
                 auth.currentUser?.updateProfile(profileUpdate)?.await()
@@ -52,13 +52,13 @@ class AuthViewModel : ViewModel() {
 
     }
 
-    fun signIn(email: String, senha: String){
+    fun signIn(email: String, password: String){
         viewModelScope.launch {
             _loading.value = true
             _authFeedback.value = null
 
             try {
-                auth.signInWithEmailAndPassword(email, senha).await()
+                auth.signInWithEmailAndPassword(email, password).await()
                 _userState.value = auth.currentUser
             } catch (e: Exception) {
                 _authFeedback.value = e.message ?: "Erro no login."
@@ -67,6 +67,14 @@ class AuthViewModel : ViewModel() {
             }
         }
 
+    }
+
+    fun getProfileName(): String? {
+        return auth.currentUser?.displayName
+    }
+
+    fun getAccountEmail(): String? {
+        return auth.currentUser?.email
     }
 
     fun getUidDoUsuario(): String? {

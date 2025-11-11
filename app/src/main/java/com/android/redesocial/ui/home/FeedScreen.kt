@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.android.redesocial.BarraInferior
 import com.android.redesocial.BarraSuperior
 import com.android.redesocial.ui.post.Post
@@ -17,12 +18,15 @@ import com.android.redesocial.viewmodel.AuthViewModel
 @Composable
 fun FeedScreen(
     authViewModel: AuthViewModel,
+    navController: NavController,
     user: com.google.firebase.auth.FirebaseUser
 ){
 
     Scaffold(
         topBar = { BarraSuperior() },
-        bottomBar = { BarraInferior() }
+        bottomBar = { BarraInferior(
+            navController = navController
+        ) }
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier

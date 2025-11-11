@@ -57,6 +57,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,9 +107,11 @@ fun BarraSuperior() {
     )
 }
 
-@Preview
 @Composable
-fun BarraInferior() {
+fun BarraInferior(
+    navController: NavController
+) {
+
     BottomAppBar(
         containerColor = MaterialTheme.colorScheme.surfaceContainer
     ) {
@@ -119,11 +122,23 @@ fun BarraInferior() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            BarraInferiorBotao(Icons.Outlined.Home, "Feed")
+            BarraInferiorBotao(
+                Icons.Outlined.Home,
+                "Feed",
+                { navController.navigate("feed") }
+            )
             BarraInferiorBotao(Icons.Outlined.Search, "Pesquisa")
-            BarraInferiorBotao(Icons.Outlined.AddCircleOutline, "Criar")
+            BarraInferiorBotao(
+                Icons.Outlined.AddCircleOutline,
+                "Criar",
+                { navController.navigate("makePost") }
+            )
             BarraInferiorBotao(Icons.Outlined.SportsEsports, "Jogos")
-            BarraInferiorBotao(Icons.Outlined.AccountCircle, "Perfil")
+            BarraInferiorBotao(
+                Icons.Outlined.AccountCircle,
+                "Perfil",
+                { navController.navigate("profile") }
+            )
         }
     }
 }

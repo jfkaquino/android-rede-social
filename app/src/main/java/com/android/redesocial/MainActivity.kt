@@ -16,6 +16,8 @@ import androidx.navigation.compose.rememberNavController
 import com.android.redesocial.ui.account.LoginScreen
 import com.android.redesocial.ui.account.SignupScreen
 import com.android.redesocial.ui.home.FeedScreen
+import com.android.redesocial.ui.post.PostScreen
+import com.android.redesocial.ui.profile.ProfileScreen
 import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 
@@ -50,7 +52,7 @@ class MainActivity : ComponentActivity() {
 
         NavHost(
             navController = navController,
-            startDestination = if (user != null) "home" else "login"
+            startDestination = if (user != null) "feed" else "login"
         ) {
             composable("signup") {
                 SignupScreen(
@@ -66,12 +68,12 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            composable("home") {
-
+            composable("feed") {
 
                 if(user != null) {
                     FeedScreen(
                         authViewModel = authViewModel,
+                        navController = navController,
                         user = user!!
                     )
                 } else {
@@ -83,7 +85,42 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+            }
 
+            composable("makePost") {
+
+                if(user != null) {
+                    PostScreen(
+                        authViewModel = authViewModel,
+                        navController = navController,
+                    )
+                } else {
+                    LaunchedEffect(Unit) {
+                        navController.navigate("login"){
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
+            }
+
+            composable("profile") {
+
+                if(user != null) {
+                    ProfileScreen(
+                        authViewModel = authViewModel,
+                        navController = navController,
+                    )
+                } else {
+                    LaunchedEffect(Unit) {
+                        navController.navigate("login"){
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
             }
 
         }

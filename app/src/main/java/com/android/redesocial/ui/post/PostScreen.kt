@@ -48,6 +48,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.android.redesocial.BarraInferior
@@ -63,7 +64,8 @@ import kotlinx.coroutines.withContext
 @Composable
 fun PostScreen(
     // Recebendo o AuthViewModel (provavelmente da sua navegação)
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    navController: NavController
 ) {
     // 1. Instanciar o ViewModel com a Factory
     val viewModel: PostViewModel = viewModel(
@@ -99,7 +101,9 @@ fun PostScreen(
 
     Scaffold(
         topBar = { BarraSuperiorMenu("Novo post") },
-        bottomBar = { BarraInferior() },
+        bottomBar = { BarraInferior(
+            navController
+        ) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) } // Adiciona o Snackbar
     ) { innerPadding ->
         Column(

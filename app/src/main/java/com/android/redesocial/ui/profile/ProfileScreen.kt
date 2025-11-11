@@ -27,22 +27,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.android.redesocial.BarraInferior
 import com.android.redesocial.BarraSuperiorMenu
 import com.android.redesocial.ui.post.Post
+import com.android.redesocial.viewmodel.AuthViewModel
 
-@Preview
 @Composable
 fun ProfileScreen(
-    /*
     authViewModel: AuthViewModel,
-    user: com.google.firebase.auth.FirebaseUser
-    */
+    navController: NavController
 ){
+    val name: String? = authViewModel.getProfileName()
+    val email: String? = authViewModel.getAccountEmail()
 
     Scaffold(
         topBar = { BarraSuperiorMenu("") },
-        bottomBar = { BarraInferior() }
+        bottomBar = { BarraInferior(
+            navController
+        ) }
     ) { innerPadding ->
 
         LazyColumn (
@@ -62,17 +65,12 @@ fun ProfileScreen(
                         contentDescription = "Perfil"
                     )
                     Text(
-                        "@usuario",
+                        text = name ?: "",
                         style = MaterialTheme.typography.displaySmall
                     )
                     Text(
-                        "(Nome)",
+                        text = email ?: "",
                         style = MaterialTheme.typography.labelLarge
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    Text(
-                        "Esta é minha bio",
-                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
                 Spacer(Modifier.height(15.dp))
@@ -131,7 +129,9 @@ fun ProfileScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = {
+                            //navController.navigate("")
+                        },
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Edit,
