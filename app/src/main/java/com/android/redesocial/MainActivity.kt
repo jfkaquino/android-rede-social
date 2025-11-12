@@ -18,6 +18,7 @@ import com.android.redesocial.ui.account.SignupScreen
 import com.android.redesocial.ui.post.FeedScreen
 import com.android.redesocial.ui.post.PostScreen
 import com.android.redesocial.ui.profile.ProfileScreen
+import com.android.redesocial.ui.settings.SettingsScreen
 import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 
@@ -108,6 +109,24 @@ class MainActivity : ComponentActivity() {
 
                 if(user != null) {
                     ProfileScreen(
+                        authViewModel = authViewModel,
+                        navController = navController,
+                    )
+                } else {
+                    LaunchedEffect(Unit) {
+                        navController.navigate("login"){
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
+            }
+
+            composable("settings") {
+
+                if(user != null) {
+                    SettingsScreen(
                         authViewModel = authViewModel,
                         navController = navController,
                     )

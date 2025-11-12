@@ -44,6 +44,7 @@ import androidx.navigation.NavController
 // Removidas importações do Coil
 // import coil.compose.AsyncImage
 import com.android.redesocial.BarraInferior
+import com.android.redesocial.BarraSuperior
 import com.android.redesocial.BarraSuperiorMenu
 import com.android.redesocial.data.cloud.Post // Importe seu modelo
 import com.android.redesocial.viewmodel.AuthViewModel
@@ -87,6 +88,7 @@ fun FeedScreen(
     }
 
     Scaffold(
+        topBar = { BarraSuperior() },
         bottomBar = { BarraInferior(navController) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->

@@ -30,6 +30,7 @@ import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Games
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Message
+import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Sports
@@ -205,5 +206,19 @@ fun BarraSuperiorMenu(
                 style = MaterialTheme.typography.titleLarge
             )
         },
+        actions = {
+            IconButton(
+                onClick = { navController.navigate("settings") },
+                modifier = Modifier
+                    .size(30.dp)
+            ){
+                Icon(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    imageVector = Icons.Outlined.MoreVert,
+                    contentDescription = "Configurações"
+                )
+            }
+        }
     )
 }

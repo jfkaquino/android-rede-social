@@ -1,54 +1,37 @@
 package com.android.redesocial.ui.settings
 
-import android.graphics.drawable.Icon
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.BrightnessMedium
-import androidx.compose.material.icons.outlined.ChevronRight
-import androidx.compose.material.icons.outlined.ExitToApp
-import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.android.redesocial.BarraSuperiorMenu
-import com.android.redesocial.R
+import com.android.redesocial.viewmodel.AuthViewModel
+import com.android.redesocial.viewmodel.SettingsViewModel
 
 @Composable
-fun Settings(
-    navController: NavController
-){
-
+fun SettingsScreen(
+    authViewModel: AuthViewModel,
+    navController: NavController,
+    settingsViewModel: SettingsViewModel = viewModel()
+) {
     Scaffold(
         topBar = {
             BarraSuperiorMenu(
                 title = "Configurações",
                 navController = navController
-            ) },
+            )
+        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -59,15 +42,36 @@ fun Settings(
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
-            Opcao(Icons.Outlined.Person, "Conta")
-            Opcao(Icons.Outlined.Lock, "Privacidade")
-            Opcao(Icons.Outlined.Notifications, "Notificações")
-            Opcao(Icons.Outlined.BrightnessMedium, "Tema")
-            Opcao(Icons.Outlined.ExitToApp, "Sair")
+            Opcao(
+                icon = Icons.Outlined.Person,
+                nome = "Conta",
+                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+            )
+
+            Opcao(Icons.Outlined.Lock,
+                nome = "Conta",
+                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+            )
+
+            Opcao(Icons.Outlined.Notifications,
+                nome = "Conta",
+                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+            )
+
+            Opcao(Icons.Outlined.BrightnessMedium,
+                nome = "Tema",
+                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+            )
+
+            Opcao(Icons.Outlined.ExitToApp,
+                nome = "Sair",
+                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+            )
 
             HorizontalDivider(
                 thickness = 1.dp,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .width(300.dp)
                     .align(Alignment.CenterHorizontally)
             )
         }
@@ -75,44 +79,59 @@ fun Settings(
 }
 
 @Composable
-fun Opcao(icon: ImageVector, nome: String){
+fun Opcao(icon: ImageVector, nome: String, opcoes: List<String>) {
+    var expanded by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        HorizontalDivider(thickness = 1.dp,
-            modifier = Modifier.width(300.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+    val rotation by animateFloatAsState(
+        targetValue = if (expanded) 180f else 0f,
+        label = "rotation"
+    )
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        HorizontalDivider(thickness = 1.dp, modifier = Modifier.width(300.dp))
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
+                .width(300.dp)
+                .height(56.dp)
+                .clickable { expanded = !expanded },
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Icon(
                 imageVector = icon,
                 contentDescription = "",
                 modifier = Modifier
-                    .padding(start = 47.dp)
+                    .padding(start = 10.dp)
                     .size(30.dp)
             )
 
             Spacer(modifier = Modifier.width(10.dp))
-
             Text(nome)
-
             Spacer(modifier = Modifier.weight(1f))
 
             Icon(
-                imageVector = Icons.Outlined.ChevronRight,
-                contentDescription = "Ir",
+                imageVector = Icons.Outlined.ArrowDropDownCircle,
+                contentDescription = "Expandir",
                 modifier = Modifier
-                    .size(30.dp)
+                    .size(28.dp)
+                    .rotate(rotation)
             )
         }
 
+        AnimatedVisibility(visible = expanded) {
+            Column(
+                modifier = Modifier
+                    .width(280.dp)
+                    .padding(start = 40.dp, bottom = 10.dp)
+            ) {
+                opcoes.forEach { opcao ->
+                    Text(
+                        text = "• $opcao",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
+                }
+            }
+        }
     }
 }
