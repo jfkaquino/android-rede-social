@@ -32,11 +32,7 @@ import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 
 @Composable
-fun SignupScreen(
-    authViewModel: AuthViewModel,
-    onNavigateToLogin: () -> Unit,
-    navController: NavController? = null,
-    userId: String? = null
+fun SignupScreen(authViewModel: AuthViewModel, onNavigateToLogin: () -> Unit, navController: NavController? = null, userId: String? = null
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -93,9 +89,9 @@ fun SignupScreen(
                 modifier = Modifier.width(160.dp),
                 onClick = {
                     if (userId != null) {
-                        authViewModel.updateUserData(name, email)
+                        authViewModel.updateUserData(name, email, navController)
                     } else {
-                        authViewModel.signUp(email, password, name)
+                        authViewModel.signUp(email, password, name, navController)
                     }
                 }
             ) {

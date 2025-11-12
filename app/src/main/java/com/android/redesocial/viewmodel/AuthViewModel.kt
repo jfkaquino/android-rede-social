@@ -2,6 +2,7 @@ package com.android.redesocial.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -33,7 +34,7 @@ class AuthViewModel : ViewModel() {
         data object NavigateToSettings : UiEvent()
     }
 
-    fun signUp(email: String, password: String, name: String){
+    fun signUp(email: String, password: String, name: String, navController: NavController?){
 
         viewModelScope.launch {
 
@@ -52,6 +53,10 @@ class AuthViewModel : ViewModel() {
                 _userState.value = auth.currentUser
                 _authFeedback.value = "Cadastro realizado com sucesso."
 
+                navController?.navigate("feed") {
+                    popUpTo("login") { inclusive = true }
+                }
+
             } catch (e: Exception) {
                 _authFeedback.value = e.message ?: "Erro desconhecido no cadastro."
             } finally {
@@ -62,7 +67,7 @@ class AuthViewModel : ViewModel() {
 
     }
 
-    fun updateUserData(name: String, email: String) {
+    fun updateUserData(name: String, email: String, navController: NavController?) {
         viewModelScope.launch {
             try {
                 val user = auth.currentUser
@@ -76,7 +81,7 @@ class AuthViewModel : ViewModel() {
                 _userState.value = auth.currentUser
                 _authFeedback.value = "Dados atualizados com sucesso."
 
-                _uiEvent.emit(UiEvent.NavigateToSettings)
+                navController?.popBackStack("settings", inclusive = false)
 
             } catch (e: Exception) {
                 _authFeedback.value = e.message ?: "Erro ao atualizar dados."
