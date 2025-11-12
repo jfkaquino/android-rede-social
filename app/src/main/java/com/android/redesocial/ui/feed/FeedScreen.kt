@@ -1,9 +1,5 @@
 package com.android.redesocial.ui.post
 
-// Removidas importações de ActivityResult
-// import androidx.activity.compose.rememberLauncherForActivityResult
-// import androidx.activity.result.PickVisualMediaRequest
-// import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,12 +37,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-// Removidas importações do Coil
-// import coil.compose.AsyncImage
 import com.android.redesocial.BarraInferior
 import com.android.redesocial.BarraSuperior
 import com.android.redesocial.BarraSuperiorMenu
-import com.android.redesocial.data.cloud.Post // Importe seu modelo
+import com.android.redesocial.data.cloud.Post
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.viewmodel.PostViewModel
 import com.android.redesocial.viewmodel.PostViewModelFactory
@@ -64,8 +58,7 @@ fun FeedScreen(
         factory = PostViewModelFactory(authViewModel)
     )
 
-    // Coletar os estados atualizados
-    val text by viewModel.text.collectAsState() // Renomeado de 'label'
+    val text by viewModel.text.collectAsState()
     val posts by viewModel.postsList.collectAsState()
     val isLoading by viewModel.loading.collectAsState()
     val feedback by viewModel.postFeedback.collectAsState()
@@ -82,13 +75,12 @@ fun FeedScreen(
         }
     }
 
-    // Carrega o feed global assim que a tela aparece
     LaunchedEffect(Unit) {
         viewModel.loadGlobalFeed()
     }
 
     Scaffold(
-        topBar = { BarraSuperior() },
+        topBar = { BarraSuperior(navController) },
         bottomBar = { BarraInferior(navController) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->

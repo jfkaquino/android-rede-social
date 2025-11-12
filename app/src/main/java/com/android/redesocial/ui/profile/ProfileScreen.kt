@@ -147,45 +147,46 @@ fun ProfileScreen(
                 )
                 Spacer(Modifier.height(10.dp))
             }
-            if (authViewModel.getUidDoUsuario() == userId)
             item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Button(
-                        onClick = {
-                            //navController.navigate("")
-                        },
+                if (authViewModel.getUidDoUsuario() == userId) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Edit,
-                            contentDescription = "Editar perfil",
-                        )
+                        Button(
+                            onClick = {
+                                //navController.navigate("")
+                            },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Edit,
+                                contentDescription = "Editar perfil",
+                            )
+                        }
+                        Spacer(Modifier.width(20.dp))
+                        Button(
+                            onClick = {
+                                authViewModel.signOut()
+                                navController.navigate("login")
+                            },
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.Logout,
+                                contentDescription = "Sair",
+                            )
+                        }
                     }
-                    Spacer(Modifier.width(20.dp))
-                    Button(
-                        onClick = {
-                            authViewModel.signOut()
-                            navController.navigate("login")
-                        },
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.Logout,
-                            contentDescription = "Sair",
-                        )
-                    }
-                }
 
-                Spacer(Modifier.height(10.dp))
-                HorizontalDivider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 25.dp)
-                )
-                Spacer(Modifier.height(15.dp))
+                    Spacer(Modifier.height(10.dp))
+                    HorizontalDivider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 25.dp)
+                    )
+                    Spacer(Modifier.height(15.dp))
+                }
             }
 
             items(posts) { post ->

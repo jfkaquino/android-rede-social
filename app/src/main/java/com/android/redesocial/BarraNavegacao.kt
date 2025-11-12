@@ -60,17 +60,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarraSuperior() {
+fun BarraSuperior(navController: androidx.navigation.NavController) {
     TopAppBar(
         navigationIcon = {
             Image(
                 painter = painterResource(id = R.drawable.nome),
-                contentDescription = "Nome",
-                modifier = Modifier
-                    .height(65.dp),
+                contentDescription = "Logo",
+                modifier = Modifier.height(65.dp),
                 contentScale = ContentScale.Fit
             )
         },
@@ -78,30 +76,31 @@ fun BarraSuperior() {
         actions = {
             Row {
                 IconButton(
-                    modifier = Modifier
-                        .size(30.dp),
+                    modifier = Modifier.size(30.dp),
                     onClick = { }
                 ) {
                     Icon(
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         imageVector = Icons.Outlined.Notifications,
                         contentDescription = "Notificações"
                     )
                 }
+
                 Spacer(Modifier.width(12.dp))
+
                 IconButton(
-                    modifier = Modifier
-                        .size(30.dp),
-                    onClick = { }
+                    modifier = Modifier.size(30.dp),
+                    onClick = {
+                        navController.navigate("groups")
+                    }
                 ) {
                     Icon(
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         imageVector = Icons.AutoMirrored.Outlined.Chat,
-                        contentDescription = "Chat"
+                        contentDescription = "Grupos"
                     )
                 }
+
                 Spacer(Modifier.width(10.dp))
             }
         }
@@ -217,6 +216,22 @@ fun BarraSuperiorMenu(
                         .fillMaxSize(),
                     imageVector = Icons.Outlined.MoreVert,
                     contentDescription = "Configurações"
+                )
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BarraSuperiorConstrucao(navController: NavController? = null, nome: String) {
+    CenterAlignedTopAppBar(
+        title = { Text(nome) },
+        navigationIcon = {
+            IconButton(onClick = { navController?.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = "Voltar"
                 )
             }
         }

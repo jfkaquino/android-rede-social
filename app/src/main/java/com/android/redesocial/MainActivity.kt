@@ -21,6 +21,8 @@ import com.android.redesocial.ui.profile.ProfileScreen
 import com.android.redesocial.ui.settings.SettingsScreen
 import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
+import com.android.redesocial.ui.construction.ConstructionScreen
+import com.android.redesocial.ui.groups.GroupsScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -156,6 +158,14 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     userId = userId
                 )
+            }
+
+            composable("construction") {
+                ConstructionScreen(navController = navController)
+            }
+
+            composable("groups") {
+                GroupsScreen(navController = navController)
             }
 
         }
