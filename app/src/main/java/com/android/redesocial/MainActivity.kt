@@ -141,6 +141,23 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
+            composable("TelaCadastro") {
+                SignupScreen(
+                    authViewModel = authViewModel,
+                    onNavigateToLogin = { navController.navigate("login") }
+                )
+            }
+
+            composable("TelaCadastro/{userId}") { backStackEntry ->
+                val userId = backStackEntry.arguments?.getString("userId")
+                SignupScreen(
+                    authViewModel = authViewModel,
+                    onNavigateToLogin = { navController.navigate("login") },
+                    navController = navController,
+                    userId = userId
+                )
+            }
+
         }
     }
 }

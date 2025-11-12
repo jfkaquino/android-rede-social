@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
 
@@ -22,6 +25,13 @@ class AuthViewModel : ViewModel() {
 
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading
+
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
+
+    sealed class UiEvent {
+        data object NavigateToSettings : UiEvent()
+    }
 
     fun signUp(email: String, password: String, name: String){
 
@@ -50,6 +60,28 @@ class AuthViewModel : ViewModel() {
 
         }
 
+    }
+
+    fun updateUserData(name: String, email: String) {
+        viewModelScope.launch {
+            try {
+                val user = auth.currentUser
+                user?.updateProfile(
+                    UserProfileChangeRequest.Builder()
+                        .setDisplayName(name)
+                        .build()
+                )?.await()
+                user?.updateEmail(email)?.await()
+
+                _userState.value = auth.currentUser
+                _authFeedback.value = "Dados atualizados com sucesso."
+
+                _uiEvent.emit(UiEvent.NavigateToSettings)
+
+            } catch (e: Exception) {
+                _authFeedback.value = e.message ?: "Erro ao atualizar dados."
+            }
+        }
     }
 
     fun signIn(email: String, password: String){

@@ -25,6 +25,9 @@ fun SettingsScreen(
     navController: NavController,
     settingsViewModel: SettingsViewModel = viewModel()
 ) {
+
+    val userId = authViewModel.getUidDoUsuario()
+
     Scaffold(
         topBar = {
             BarraSuperiorMenu(
@@ -45,27 +48,43 @@ fun SettingsScreen(
             Opcao(
                 icon = Icons.Outlined.Person,
                 nome = "Conta",
-                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+                opcoes = listOf(
+                    "Alterar dados" to {
+                        settingsViewModel.onEditAccount(navController, userId)
+                    }
+                )
             )
 
-            Opcao(Icons.Outlined.Lock,
-                nome = "Conta",
-                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+            Opcao(
+                icon = Icons.Outlined.Lock,
+                nome = "Privacidade",
+                opcoes = listOf(
+                    "Gerenciar privacidade" to { settingsViewModel.onPrivacy(navController) }
+                )
             )
 
-            Opcao(Icons.Outlined.Notifications,
-                nome = "Conta",
-                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+            Opcao(
+                icon = Icons.Outlined.Notifications,
+                nome = "Notificações",
+                opcoes = listOf(
+                    "Configurar notificações" to { settingsViewModel.onNotifications(navController) }
+                )
             )
 
-            Opcao(Icons.Outlined.BrightnessMedium,
+            Opcao(
+                icon = Icons.Outlined.BrightnessMedium,
                 nome = "Tema",
-                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+                opcoes = listOf(
+                    "Alterar tema" to { settingsViewModel.onTheme(navController) }
+                )
             )
 
-            Opcao(Icons.Outlined.ExitToApp,
+            Opcao(
+                icon = Icons.Outlined.ExitToApp,
                 nome = "Sair",
-                opcoes = listOf("Alterar nome", "Alterar e-mail", "Alterar senha")
+                opcoes = listOf(
+                    "Encerrar sessão" to { settingsViewModel.onLogout(navController) }
+                )
             )
 
             HorizontalDivider(
@@ -79,7 +98,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun Opcao(icon: ImageVector, nome: String, opcoes: List<String>) {
+fun Opcao(icon: ImageVector, nome: String, opcoes: List<Pair<String, () -> Unit>>) {
     var expanded by remember { mutableStateOf(false) }
 
     val rotation by animateFloatAsState(
@@ -122,13 +141,15 @@ fun Opcao(icon: ImageVector, nome: String, opcoes: List<String>) {
             Column(
                 modifier = Modifier
                     .width(280.dp)
-                    .padding(start = 40.dp, bottom = 10.dp)
+                    .padding(bottom = 10.dp)
             ) {
-                opcoes.forEach { opcao ->
+                opcoes.forEach { (texto, acao) ->
                     Text(
-                        text = "• $opcao",
+                        text = "$texto",
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        modifier = Modifier
+                            .padding(vertical = 4.dp)
+                            .clickable { acao() }
                     )
                 }
             }
