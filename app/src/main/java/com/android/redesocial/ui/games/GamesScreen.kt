@@ -28,12 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.android.redesocial.ui.BarraSuperiorOpcao
 import com.android.redesocial.R
+import com.android.redesocial.ui.BarraInferior
 
 @Composable
-fun GamesScreen(navController: NavController?){
+fun GamesScreen(navController: NavController){
 
     Scaffold(
-        topBar = { BarraSuperiorOpcao(navController, "Jogos") }
+        topBar = { BarraSuperiorOpcao(navController, "Jogos") },
+        bottomBar = { BarraInferior(navController) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -44,10 +46,10 @@ fun GamesScreen(navController: NavController?){
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
-            Opcao("Sudoku", R.drawable.sudoku) { navController?.navigate("construction") }
-            Opcao("Paciência", R.drawable.paciencia3) { navController?.navigate("construction") }
-            Opcao("Jogo da Velha", R.drawable.velha) { navController?.navigate("construction") }
-            Opcao("Xadrez", R.drawable.xadrez) { navController?.navigate("xadrez") }
+            Opcao("Sudoku", R.drawable.sudoku) { navController.navigate("construction") }
+            Opcao("Paciência", R.drawable.paciencia3) { navController.navigate("construction") }
+            Opcao("Jogo da Velha", R.drawable.velha) { navController.navigate("construction") }
+            Opcao("Xadrez", R.drawable.xadrez) { navController.navigate("xadrez") }
 
             HorizontalDivider(
                 thickness = 1.dp,

@@ -80,7 +80,9 @@ class AuthViewModel : ViewModel() {
                 _userState.value = auth.currentUser
                 _authFeedback.value = "Dados atualizados com sucesso."
 
-                navController?.popBackStack("settings", inclusive = false)
+                navController?.navigate("feed") {
+                    popUpTo("login") { inclusive = true }
+                }
 
             } catch (e: Exception) {
                 _authFeedback.value = e.message ?: "Erro ao atualizar dados."

@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.android.redesocial.ui.BarraInferior
 import com.android.redesocial.ui.BarraSuperiorMenu
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.viewmodel.SettingsViewModel
@@ -38,6 +39,7 @@ fun SettingsScreen(
                 navController = navController
             )
         },
+        bottomBar = { BarraInferior(navController) },
     ) { innerPadding ->
         Column(
             modifier = Modifier
