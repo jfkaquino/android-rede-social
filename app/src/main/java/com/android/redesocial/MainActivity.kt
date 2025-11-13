@@ -33,11 +33,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            // 👇 Cria o viewModel do tema
             val themeViewModel: ThemeViewModel = viewModel()
-            val isDarkTheme by remember { derivedStateOf { themeViewModel.isDarkTheme } } // ✅ reativo
-
-            // 👇 Aplica o tema dinamicamente
+            val isDarkTheme by remember { derivedStateOf { themeViewModel.isDarkTheme } }
             RedeSocialTheme(darkTheme = isDarkTheme) {
                 AppNavigation(authViewModel = authViewModel, themeViewModel = themeViewModel)
             }

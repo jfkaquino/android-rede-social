@@ -25,7 +25,7 @@ fun SettingsScreen(
     authViewModel: AuthViewModel,
     navController: NavController,
     settingsViewModel: SettingsViewModel = viewModel(),
-    themeViewModel: ThemeViewModel // ✅ agora vem de fora (mesmo do MainActivity)
+    themeViewModel: ThemeViewModel
 ) {
 
     val userId = authViewModel.getUidDoUsuario()
