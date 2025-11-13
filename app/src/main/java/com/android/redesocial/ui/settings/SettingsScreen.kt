@@ -59,7 +59,7 @@ fun SettingsScreen(
                 icon = Icons.Outlined.Lock,
                 nome = "Privacidade",
                 opcoes = listOf(
-                    "Gerenciar privacidade" to { settingsViewModel.onPrivacy(navController) }
+                    "Gerenciar privacidade" to { navController.navigate("construction") }
                 )
             )
 
@@ -67,7 +67,7 @@ fun SettingsScreen(
                 icon = Icons.Outlined.Notifications,
                 nome = "Notificações",
                 opcoes = listOf(
-                    "Configurar notificações" to { settingsViewModel.onNotifications(navController) }
+                    "Configurar notificações" to { navController.navigate("construction") }
                 )
             )
 
@@ -75,7 +75,7 @@ fun SettingsScreen(
                 icon = Icons.Outlined.BrightnessMedium,
                 nome = "Tema",
                 opcoes = listOf(
-                    "Alterar tema" to { settingsViewModel.onTheme(navController) }
+                    "Alterar tema" to { navController.navigate("construction") }
                 )
             )
 
