@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.android.redesocial.BarraInferior
 import com.android.redesocial.BarraSuperior
-import com.android.redesocial.BarraSuperiorConstrucao
+import com.android.redesocial.BarraSuperiorOpcao
 import com.android.redesocial.ui.post.PostItem
 import com.android.redesocial.R
 import com.android.redesocial.viewmodel.GroupsViewModel
@@ -51,7 +51,7 @@ import com.google.common.collect.Multimaps.index
 fun GroupsScreen(navController: androidx.navigation.NavController,viewModel: GroupsViewModel = viewModel()) {
 
     Scaffold(
-        topBar = { BarraSuperiorConstrucao(navController, "Grupos") }
+        topBar = { BarraSuperiorOpcao(navController, "Grupos") }
     ) { innerPadding ->
         Column(
             modifier = Modifier

@@ -77,7 +77,7 @@ fun BarraSuperior(navController: androidx.navigation.NavController) {
             Row {
                 IconButton(
                     modifier = Modifier.size(30.dp),
-                    onClick = { }
+                    onClick = { navController.navigate("construction") }
                 ) {
                     Icon(
                         modifier = Modifier.fillMaxSize(),
@@ -108,9 +108,7 @@ fun BarraSuperior(navController: androidx.navigation.NavController) {
 }
 
 @Composable
-fun BarraInferior(
-    navController: NavController
-) {
+fun BarraInferior(navController: NavController) {
 
     BottomAppBar(
         containerColor = MaterialTheme.colorScheme.surfaceContainer
@@ -133,7 +131,10 @@ fun BarraInferior(
                 "Criar",
                 { navController.navigate("makePost") }
             )
-            BarraInferiorBotao(Icons.Outlined.SportsEsports, "Jogos")
+            BarraInferiorBotao(Icons.Outlined.SportsEsports,
+                "Jogos",
+                { navController.navigate("games") }
+            )
             BarraInferiorBotao(
                 Icons.Outlined.AccountCircle,
                 "Perfil",
@@ -144,11 +145,7 @@ fun BarraInferior(
 }
 
 @Composable
-private fun BarraInferiorBotao(
-    icon: ImageVector,
-    text: String,
-    onClick: () -> Unit = {}
-) {
+private fun BarraInferiorBotao(icon: ImageVector, text: String, onClick: () -> Unit = {}) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -178,10 +175,7 @@ private fun BarraInferiorBotao(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun BarraSuperiorMenu(
-    title: String = "Título",
-    navController: NavController
-) {
+fun BarraSuperiorMenu(title: String = "Título", navController: NavController) {
     CenterAlignedTopAppBar(
         navigationIcon = {
             IconButton(
@@ -224,7 +218,7 @@ fun BarraSuperiorMenu(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarraSuperiorConstrucao(navController: NavController? = null, nome: String) {
+fun BarraSuperiorOpcao(navController: NavController? = null, nome: String) {
     CenterAlignedTopAppBar(
         title = { Text(nome) },
         navigationIcon = {

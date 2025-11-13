@@ -22,6 +22,7 @@ import com.android.redesocial.ui.settings.SettingsScreen
 import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.ui.construction.ConstructionScreen
+import com.android.redesocial.ui.games.GamesScreen
 import com.android.redesocial.ui.groups.GroupsScreen
 
 class MainActivity : ComponentActivity() {
@@ -164,10 +165,11 @@ class MainActivity : ComponentActivity() {
                 ConstructionScreen(navController = navController)
             }
 
-            composable("groups") {
-                GroupsScreen(navController = navController)
-            }
+            composable("groups") { GroupsScreen(navController = navController) }
 
+            composable("xadrez") { XadrezScreen() }
+
+            composable("games") { GamesScreen(navController = navController) }
         }
     }
 }

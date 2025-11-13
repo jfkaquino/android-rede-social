@@ -14,14 +14,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.android.redesocial.BarraSuperiorConstrucao
+import com.android.redesocial.BarraSuperiorOpcao
 import com.android.redesocial.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConstructionScreen(navController: NavController? = null) {
     Scaffold(
-        topBar = { BarraSuperiorConstrucao(navController, "Em construção") }
+        topBar = { BarraSuperiorOpcao(navController, "Em construção") }
     )  { innerPadding ->
         Column(
             modifier = Modifier
