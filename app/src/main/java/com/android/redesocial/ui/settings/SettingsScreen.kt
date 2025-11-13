@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.android.redesocial.BarraSuperiorMenu
+import com.android.redesocial.ui.BarraSuperiorMenu
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.viewmodel.SettingsViewModel
 import com.android.redesocial.viewmodel.ThemeViewModel   // import já estava

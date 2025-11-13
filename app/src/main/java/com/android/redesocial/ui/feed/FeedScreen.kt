@@ -18,8 +18,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.android.redesocial.BarraInferior
-import com.android.redesocial.BarraSuperior
+import com.android.redesocial.ui.BarraInferior
+import com.android.redesocial.ui.BarraSuperior
 import com.android.redesocial.ui.post.PostItem
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.viewmodel.PostViewModel
@@ -70,7 +70,7 @@ fun FeedScreen(
                     .weight(1f)
             ) {
                 items(posts) { post ->
-                    PostItem(post = post, navController = navController)
+                    PostItem(post = post)
                 }
             }
         }

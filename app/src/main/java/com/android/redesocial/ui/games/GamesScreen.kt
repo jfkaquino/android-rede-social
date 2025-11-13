@@ -26,7 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.android.redesocial.BarraSuperiorOpcao
+import com.android.redesocial.ui.BarraSuperiorOpcao
 import com.android.redesocial.R
 
 @Composable

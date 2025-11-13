@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.android.redesocial.BarraSuperiorOpcao
+import com.android.redesocial.ui.BarraSuperiorOpcao
 import com.android.redesocial.R
 
 @OptIn(ExperimentalMaterial3Api::class)

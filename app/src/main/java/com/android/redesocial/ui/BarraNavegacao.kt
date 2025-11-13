@@ -1,4 +1,4 @@
-package com.android.redesocial
+package com.android.redesocial.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.android.redesocial.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,18 +56,6 @@ fun BarraSuperior(navController: androidx.navigation.NavController) {
         title = { },
         actions = {
             Row {
-                IconButton(
-                    modifier = Modifier.size(30.dp),
-                    onClick = { navController.navigate("construction") }
-                ) {
-                    Icon(
-                        modifier = Modifier.fillMaxSize(),
-                        imageVector = Icons.Outlined.Notifications,
-                        contentDescription = "Notificações"
-                    )
-                }
-
-                Spacer(Modifier.width(12.dp))
 
                 IconButton(
                     modifier = Modifier.size(30.dp),

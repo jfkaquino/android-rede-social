@@ -31,8 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.android.redesocial.BarraInferior
-import com.android.redesocial.BarraSuperiorMenu
+import com.android.redesocial.ui.BarraInferior
+import com.android.redesocial.ui.BarraSuperiorMenu
 import com.android.redesocial.ui.post.PostItem
 import com.android.redesocial.ui.post.toFriendlyDate
 import com.android.redesocial.viewmodel.AuthViewModel
@@ -154,7 +154,7 @@ fun ProfileScreen(
                     ) {
                         Button(
                             onClick = {
-
+                                navController.navigate("TelaCadastro/${userId}")
                             },
                         ) {
                             Icon(
@@ -187,7 +187,7 @@ fun ProfileScreen(
             }
 
             items(posts) { post ->
-                PostItem(post = post, navController = navController)
+                PostItem(post = post)
             }
         }
     }

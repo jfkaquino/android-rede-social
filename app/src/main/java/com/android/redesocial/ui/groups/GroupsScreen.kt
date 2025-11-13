@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.android.redesocial.BarraSuperiorOpcao
+import com.android.redesocial.ui.BarraSuperiorOpcao
 import com.android.redesocial.viewmodel.GroupsViewModel
 
 

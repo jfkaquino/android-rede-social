@@ -1,5 +1,6 @@
 package com.android.redesocial.ui.post
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,12 +31,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.android.redesocial.BarraInferior
-import com.android.redesocial.BarraSuperiorMenu
 import com.android.redesocial.data.cloud.Post
+import com.android.redesocial.ui.BarraInferior
+import com.android.redesocial.ui.BarraSuperiorMenu
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.viewmodel.PostViewModel
 import com.android.redesocial.viewmodel.PostViewModelFactory
@@ -119,9 +122,10 @@ fun PostScreen(
 
 @Composable
 fun PostItem(
-    post: Post,
-    navController: NavController
+    post: Post
 ) {
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -130,15 +134,12 @@ fun PostItem(
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(
-                    onClick = { navController.navigate("profile/${post.ownerId}") }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.AccountCircle,
-                        contentDescription = "Usuário",
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
+                Icon(
+                    imageVector = Icons.Outlined.AccountCircle,
+                    tint = MaterialTheme.colorScheme.primary,
+                    contentDescription = "Usuário",
+                    modifier = Modifier.size(32.dp)
+                )
 
                 Spacer(modifier = Modifier.padding(start = 8.dp))
 
@@ -153,8 +154,32 @@ fun PostItem(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
+
+                Spacer(Modifier.weight(1f))
+
+                IconButton(
+                    onClick = {
+
+                        val sendIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT,
+                                "${post.ownerName} disse: ${post.text}")
+                            type = "text/plain"
+                        }
+                        val shareIntent = Intent.createChooser(sendIntent, "Share via")
+                        context.startActivity(shareIntent)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Share,
+                        contentDescription = "Compartilhar",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
-            Spacer(modifier = Modifier.height(12.dp))
+
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
                 text = post.text ?: "",
                 style = MaterialTheme.typography.bodyLarge
