@@ -1,4 +1,4 @@
-package com.android.redesocial
+package com.android.redesocial.ui.games
 
 import android.webkit.WebView
 import androidx.compose.foundation.layout.fillMaxSize

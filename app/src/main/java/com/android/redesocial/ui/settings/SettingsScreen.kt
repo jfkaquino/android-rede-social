@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -86,7 +87,7 @@ fun SettingsScreen(
             )
 
             Opcao(
-                icon = Icons.Outlined.ExitToApp,
+                icon = Icons.AutoMirrored.Outlined.ExitToApp,
                 nome = "Sair",
                 opcoes = listOf(
                     "Encerrar sessão" to { settingsViewModel.onLogout(navController) }
@@ -151,7 +152,7 @@ fun Opcao(icon: ImageVector, nome: String, opcoes: List<Pair<String, () -> Unit>
             ) {
                 opcoes.forEach { (texto, acao) ->
                     Text(
-                        text = "$texto",
+                        text = texto,
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier
                             .padding(vertical = 4.dp)

@@ -14,14 +14,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.redesocial.ui.account.LoginScreen
 import com.android.redesocial.ui.account.SignupScreen
-import com.android.redesocial.ui.post.FeedScreen
 import com.android.redesocial.ui.post.PostScreen
 import com.android.redesocial.ui.profile.ProfileScreen
 import com.android.redesocial.ui.settings.SettingsScreen
 import com.android.redesocial.ui.theme.RedeSocialTheme
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.ui.construction.ConstructionScreen
+import com.android.redesocial.ui.feed.FeedScreen
 import com.android.redesocial.ui.games.GamesScreen
+import com.android.redesocial.ui.games.XadrezScreen
 import com.android.redesocial.ui.groups.GroupsScreen
 import com.android.redesocial.viewmodel.ThemeViewModel // 👈 import do tema
 
@@ -49,7 +50,6 @@ class MainActivity : ComponentActivity() {
 
         val navController = rememberNavController()
         val user by authViewModel.userState.collectAsStateWithLifecycle()
-        val isLoading by authViewModel.loading.collectAsStateWithLifecycle()
         val feedbackMsg by authViewModel.authFeedback.collectAsStateWithLifecycle()
 
         LaunchedEffect(feedbackMsg) {
@@ -122,12 +122,30 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
+            composable("profile/{userId}") { backStackEntry ->
+                val userId = backStackEntry.arguments?.getString("userId")
+
+                if(user != null) {
+                    ProfileScreen(
+                        authViewModel = authViewModel,
+                        navController = navController,
+                        userId = userId!!
+                    )
+                } else {
+                    LaunchedEffect(Unit) {
+                        navController.navigate("login") {
+                            popUpTo(navController.graph.id) { inclusive = true }
+                        }
+                    }
+                }
+            }
+
             composable("settings") {
                 if (user != null) {
                     SettingsScreen(
                         authViewModel = authViewModel,
                         navController = navController,
-                        settingsViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+                        settingsViewModel = viewModel(),
                         themeViewModel = themeViewModel
                     )
                 } else {

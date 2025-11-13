@@ -2,11 +2,8 @@ package com.android.redesocial.data.cloud
 
 // Removida a importação de android.net.Uri
 import android.util.Log
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.storage
 import kotlinx.coroutines.tasks.await
 // Removida a importação de java.util.UUID
 import kotlin.coroutines.cancellation.CancellationException

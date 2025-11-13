@@ -15,15 +15,4 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
-    fun onPrivacy(navController: NavController) {
-        navController.navigate("privacy")
-    }
-
-    fun onTheme(navController: NavController) {
-        navController.navigate("theme")
-    }
-
-    fun onNotifications(navController: NavController) {
-        navController.navigate("notifications")
-    }
 }

@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -51,8 +52,7 @@ fun PostScreen(
         factory = PostViewModelFactory(authViewModel)
     )
 
-    // Coletar os estados atualizados
-    val text by viewModel.text.collectAsState() // Renomeado de 'label'
+    val text by viewModel.text.collectAsState()
     val isLoading by viewModel.loading.collectAsState()
     val feedback by viewModel.postFeedback.collectAsState()
 
@@ -82,7 +82,6 @@ fun PostScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // --- Seção para Criar Novo Post ---
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -90,12 +89,12 @@ fun PostScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 OutlinedTextField(
-                    value = text, // Usa o 'text' do ViewModel
-                    onValueChange = { viewModel.onTextChanged(it) }, // Chama 'onTextChanged'
+                    value = text,
+                    onValueChange = { viewModel.onTextChanged(it) },
                     label = { Text("O que está pensando?") },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isLoading,
-                    minLines = 3 // Permite mais espaço para texto
+                    minLines = 3
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -104,12 +103,11 @@ fun PostScreen(
                     onClick = {
                         viewModel.publishNewPost()
                     },
-                    enabled = !isLoading && text.isNotBlank() // Habilita se não estiver carregando E o texto não for vazio
+                    enabled = !isLoading && text.isNotBlank()
                 ) {
                     Text("Postar")
                 }
 
-                // Indicador de carregamento (apenas se estiver postando)
                 if (isLoading) {
                     Spacer(Modifier.height(8.dp))
                     CircularProgressIndicator()
@@ -119,11 +117,11 @@ fun PostScreen(
     }
 }
 
-/**
- * Um Composable simples para exibir um item de post (texto).
- */
 @Composable
-fun PostItem(post: Post) {
+fun PostItem(
+    post: Post,
+    navController: NavController
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -132,19 +130,25 @@ fun PostItem(post: Post) {
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = Icons.Outlined.AccountCircle,
-                    contentDescription = "Usuário",
-                    modifier = Modifier.size(32.dp)
-                )
+                IconButton(
+                    onClick = { navController.navigate("profile/${post.ownerId}") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.AccountCircle,
+                        contentDescription = "Usuário",
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+
                 Spacer(modifier = Modifier.padding(start = 8.dp))
+
                 Column {
                     Text(
                         text = post.ownerName ?: "",
                         style = MaterialTheme.typography.titleSmall
                     )
                     Text(
-                        text = post.timestamp.toFriendlyDate("dd/MM/yy HH:mm"), // Formata a data
+                        text = post.timestamp.toFriendlyDate("dd/MM/yy HH:mm"),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -152,14 +156,13 @@ fun PostItem(post: Post) {
             }
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = post.text ?: "", // O conteúdo do post
+                text = post.text ?: "",
                 style = MaterialTheme.typography.bodyLarge
             )
         }
     }
 }
 
-// Função utilitária simples para formatar o timestamp
 fun Long.toFriendlyDate(s: String): String {
     val date = Date(this)
     val format = SimpleDateFormat(s, Locale.getDefault())
