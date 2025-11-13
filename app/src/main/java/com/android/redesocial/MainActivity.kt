@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun AppNavigation(
         authViewModel: AuthViewModel = AuthViewModel(),
-        themeViewModel: ThemeViewModel = viewModel() // 👈 recebe o mesmo viewModel do tema
+        themeViewModel: ThemeViewModel = viewModel()
     ) {
 
         val navController = rememberNavController()
@@ -131,7 +131,7 @@ class MainActivity : ComponentActivity() {
                         authViewModel = authViewModel,
                         navController = navController,
                         settingsViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-                        themeViewModel = themeViewModel // ✅ passa o mesmo viewModel
+                        themeViewModel = themeViewModel
                     )
                 } else {
                     LaunchedEffect(Unit) {
