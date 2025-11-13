@@ -6,10 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +23,7 @@ import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.ui.construction.ConstructionScreen
 import com.android.redesocial.ui.games.GamesScreen
 import com.android.redesocial.ui.groups.GroupsScreen
+import com.android.redesocial.viewmodel.ThemeViewModel // 👈 import do tema
 
 class MainActivity : ComponentActivity() {
 
@@ -33,14 +33,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RedeSocialTheme {
-                AppNavigation(authViewModel)
+            // 👇 Cria o viewModel do tema
+            val themeViewModel: ThemeViewModel = viewModel()
+            val isDarkTheme by remember { derivedStateOf { themeViewModel.isDarkTheme } } // ✅ reativo
+
+            // 👇 Aplica o tema dinamicamente
+            RedeSocialTheme(darkTheme = isDarkTheme) {
+                AppNavigation(authViewModel = authViewModel, themeViewModel = themeViewModel)
             }
         }
     }
 
     @Composable
-    fun AppNavigation(authViewModel: AuthViewModel = AuthViewModel()) {
+    fun AppNavigation(
+        authViewModel: AuthViewModel = AuthViewModel(),
+        themeViewModel: ThemeViewModel = viewModel() // 👈 recebe o mesmo viewModel do tema
+    ) {
 
         val navController = rememberNavController()
         val user by authViewModel.userState.collectAsStateWithLifecycle()
@@ -73,72 +81,62 @@ class MainActivity : ComponentActivity() {
             }
 
             composable("feed") {
-
-                if(user != null) {
+                if (user != null) {
                     FeedScreen(
                         authViewModel = authViewModel,
                         navController = navController
                     )
                 } else {
                     LaunchedEffect(Unit) {
-                        navController.navigate("login"){
-                            popUpTo(navController.graph.id) {
-                                inclusive = true
-                            }
+                        navController.navigate("login") {
+                            popUpTo(navController.graph.id) { inclusive = true }
                         }
                     }
                 }
             }
 
             composable("makePost") {
-
-                if(user != null) {
+                if (user != null) {
                     PostScreen(
                         authViewModel = authViewModel,
                         navController = navController,
                     )
                 } else {
                     LaunchedEffect(Unit) {
-                        navController.navigate("login"){
-                            popUpTo(navController.graph.id) {
-                                inclusive = true
-                            }
+                        navController.navigate("login") {
+                            popUpTo(navController.graph.id) { inclusive = true }
                         }
                     }
                 }
             }
 
             composable("profile") {
-
-                if(user != null) {
+                if (user != null) {
                     ProfileScreen(
                         authViewModel = authViewModel,
                         navController = navController,
                     )
                 } else {
                     LaunchedEffect(Unit) {
-                        navController.navigate("login"){
-                            popUpTo(navController.graph.id) {
-                                inclusive = true
-                            }
+                        navController.navigate("login") {
+                            popUpTo(navController.graph.id) { inclusive = true }
                         }
                     }
                 }
             }
 
             composable("settings") {
-
-                if(user != null) {
+                if (user != null) {
                     SettingsScreen(
                         authViewModel = authViewModel,
                         navController = navController,
+                        settingsViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+                        themeViewModel = themeViewModel // ✅ passa o mesmo viewModel
                     )
                 } else {
                     LaunchedEffect(Unit) {
-                        navController.navigate("login"){
-                            popUpTo(navController.graph.id) {
-                                inclusive = true
-                            }
+                        navController.navigate("login") {
+                            popUpTo(navController.graph.id) { inclusive = true }
                         }
                     }
                 }

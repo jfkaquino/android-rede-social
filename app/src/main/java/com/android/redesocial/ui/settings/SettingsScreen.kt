@@ -18,12 +18,14 @@ import androidx.navigation.NavController
 import com.android.redesocial.BarraSuperiorMenu
 import com.android.redesocial.viewmodel.AuthViewModel
 import com.android.redesocial.viewmodel.SettingsViewModel
+import com.android.redesocial.viewmodel.ThemeViewModel   // import já estava
 
 @Composable
 fun SettingsScreen(
     authViewModel: AuthViewModel,
     navController: NavController,
-    settingsViewModel: SettingsViewModel = viewModel()
+    settingsViewModel: SettingsViewModel = viewModel(),
+    themeViewModel: ThemeViewModel // ✅ agora vem de fora (mesmo do MainActivity)
 ) {
 
     val userId = authViewModel.getUidDoUsuario()
@@ -71,11 +73,16 @@ fun SettingsScreen(
                 )
             )
 
+            // ✅ Agora a troca de tema realmente reflete no app todo
             Opcao(
                 icon = Icons.Outlined.BrightnessMedium,
                 nome = "Tema",
                 opcoes = listOf(
-                    "Alterar tema" to { navController.navigate("construction") }
+                    if (themeViewModel.isDarkTheme) {
+                        "Mudar para tema claro" to { themeViewModel.toggleTheme() }
+                    } else {
+                        "Mudar para tema escuro" to { themeViewModel.toggleTheme() }
+                    }
                 )
             )
 
