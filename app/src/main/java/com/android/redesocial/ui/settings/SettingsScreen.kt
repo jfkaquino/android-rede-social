@@ -73,7 +73,6 @@ fun SettingsScreen(
                 )
             )
 
-            // ✅ Agora a troca de tema realmente reflete no app todo
             Opcao(
                 icon = Icons.Outlined.BrightnessMedium,
                 nome = "Tema",
